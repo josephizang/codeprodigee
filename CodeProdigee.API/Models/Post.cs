@@ -27,5 +27,9 @@ namespace CodeProdigee.API.Models
         public List<Resource> Resources { get; set; }
 
         public List<Comment> Comments { get; set; }
+
+        public List<PostResources> PostResources { get; set; }
+
+        public List<PostTags> PostTags { get; set; }
     }
 }

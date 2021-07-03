@@ -12,6 +12,10 @@ namespace CodeProdigee.API.Models
 
         public Commentator CommentAuthor { get; set; }
 
+        public Post Post { get; set; }
+
+        public Guid PostID { get; set; }
+
         public Guid CommentAuthorID { get; set; }
 
         public string CommentBody { get; set; }

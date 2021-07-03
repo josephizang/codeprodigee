@@ -13,6 +13,19 @@ namespace CodeProdigee.API.TypeConfigurations
         public void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.HasKey(p => p.ID);
+            builder.Property(p => p.PostBody)
+                .HasMaxLength(3000)
+                .IsRequired();
+            builder.Property(p => p.PostDate)
+                .IsRequired();
+            builder.HasMany(p => p.Resources)
+                .WithMany(r => r.Posts);
+            builder.HasMany(p => p.Tags)
+                .WithMany(t => t.Posts);
+            builder.Property(p => p.UpdatedBy)
+                .HasMaxLength(50);
+            builder.Property(p => p.CreatedBy)
+                .HasMaxLength(50);
             
         }
     }

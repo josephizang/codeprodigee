@@ -29,9 +29,13 @@ namespace CodeProdigee.API.Data
 
         public DbSet<Resource> Resources { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Commentator> Commentators { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            builder.ApplyConfigurationsFromAssembly(typeof(Startup).Assembly);
         }
     }
 }

@@ -12,6 +12,11 @@ namespace CodeProdigee.API.Models
 
         public string Description { get; set; }
 
+        public ResourceType PostResourceType { get; set; }
+
         public List<Post> Posts { get; set; }
+
+        public List<PostResources> PostResources { get; set; }
+
     }
 }
