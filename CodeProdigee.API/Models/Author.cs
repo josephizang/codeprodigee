@@ -8,5 +8,15 @@ namespace CodeProdigee.API.Models
 {
     public class Author : DomainModelBase
     {
+        public string AuthorName { get; set; }
+
+        public string AuthorEmail { get; set; }
+
+        public string AuthorTwitter { get; set; }
+
+        public List<Post> AuthorPosts { get; set; }
+
+        public List<Comment> AuthorComments { get; set; }
+
     }
 }
