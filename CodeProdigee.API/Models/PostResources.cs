@@ -14,5 +14,7 @@ namespace CodeProdigee.API.Models
         public Resource Resource { get; set; }
 
         public Guid ResourceID { get; set; }
+
+        public DateTimeOffset PublishDate { get; set; }
     }
 }

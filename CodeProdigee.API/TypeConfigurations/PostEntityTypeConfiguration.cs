@@ -26,6 +26,12 @@ namespace CodeProdigee.API.TypeConfigurations
                 .HasMaxLength(50);
             builder.Property(p => p.CreatedBy)
                 .HasMaxLength(50);
+            builder.Property(p => p.PostTitle)
+                .HasMaxLength(200)
+                .IsRequired();
+            builder.HasIndex(p => p.PostTitle)
+                .IsUnique();
+            builder.HasIndex(p => p.PublishDate);
             
         }
     }

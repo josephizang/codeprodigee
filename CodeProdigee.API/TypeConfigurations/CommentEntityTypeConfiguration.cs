@@ -16,7 +16,7 @@ namespace CodeProdigee.API.TypeConfigurations
                 .HasMaxLength(1000)
                 .IsRequired();
             builder.HasMany(c => c.Replies)
-                .WithOne().HasForeignKey(c => c.ID);
+                .WithOne();
             builder.HasOne(c => c.Post)
                 .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.PostID);

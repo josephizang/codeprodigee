@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  pg_db:
+    image: postgres:12.7
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=testP@ssword1
+      - POSTGRES_Db=blogdb
+    ports:
+      - '5432:5432'
+    volumes: 
+      - ../postgres-data:/var/lib/postgresql/data

@@ -14,5 +14,7 @@ namespace CodeProdigee.API.Models
         public Post Post { get; set; }
 
         public Guid PostID { get; set; }
+
+        public DateTimeOffset PublishDate { get; set; }
     }
 }
