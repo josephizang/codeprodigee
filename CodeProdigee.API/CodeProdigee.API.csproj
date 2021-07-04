@@ -28,9 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Command\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Queries\" />
+    <Folder Include="Dtos\Authors\" />
   </ItemGroup>
 
 </Project>

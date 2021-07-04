@@ -13,6 +13,7 @@ namespace CodeProdigee.API.Abstractions
                 ID = Guid.NewGuid();
             if (CreatedAt == DateTimeOffset.MinValue)
                 CreatedAt = DateTimeOffset.UtcNow;
+            UpdatedAt = CreatedAt;
         }
         public Guid ID { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
