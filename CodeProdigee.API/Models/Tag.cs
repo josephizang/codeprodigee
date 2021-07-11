@@ -10,9 +10,9 @@ namespace CodeProdigee.API.Models
     {
         public string TagName { get; set; }
 
-        public List<Post> Posts { get; set; }
+        public List<Post> Posts { get; set; } = new();
 
-        public List<PostTags> PostTags { get; set; }
+        public List<PostTags> PostTags { get; set; } = new();
 
     }
 }

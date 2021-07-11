@@ -14,6 +14,6 @@ namespace CodeProdigee.API.Models
 
         public string BlogName { get; set; }
 
-        public List<Post> Posts { get; set; }
+        public List<Post> Posts { get; set; } = new();
     }
 }

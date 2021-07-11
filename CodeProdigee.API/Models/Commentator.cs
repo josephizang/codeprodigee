@@ -8,7 +8,7 @@ namespace CodeProdigee.API.Models
 {
     public class Commentator : DomainModelBase
     {
-        public List<Comment> CommentatorComments { get; set; }
+        public List<Comment> CommentatorComments { get; set; } = new();
 
         public string Email { get; set; }
 

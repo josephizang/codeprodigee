@@ -8,7 +8,7 @@ namespace CodeProdigee.API.Models
 {
     public class Comment : DomainModelBase
     {
-        public List<Comment> Replies { get; set; }
+        public List<Comment> Replies { get; set; } = new();
 
         public Commentator CommentAuthor { get; set; }
 
@@ -22,9 +22,9 @@ namespace CodeProdigee.API.Models
 
         public string Title { get; set; }
 
-        public List<bool> Likes { get; set; }
+        public List<bool> Likes { get; set; } = new();
 
-        public List<bool> DisLikes { get; set; }
+        public List<bool> DisLikes { get; set; } = new();
 
 
 

@@ -1,4 +1,6 @@
-﻿using CodeProdigee.API.Dtos.Posts;
+﻿using CodeProdigee.API.Command.Post;
+using CodeProdigee.API.Dtos.Posts;
+using CodeProdigee.API.EventNotifications.Posts;
 using CodeProdigee.API.Queries.Posts;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -44,21 +46,54 @@ namespace CodeProdigee.API.Controllers
 
         // GET api/<PostsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PostDto>> Get(Guid id)
         {
-            return "value";
+            try
+            {
+                var result = await _mediator.Send(new GetOnePostQuery()).ConfigureAwait(false);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ErrorMessage = ex.Message });
+            }
         }
 
         // POST api/<PostsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PostProcessedDto>> Post([FromBody] PostCreateCommand command)
         {
+            try
+            {
+                var result = await _mediator.Send(command).ConfigureAwait(false);
+                return Created("api/posts", result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ex.Message });
+            }
         }
 
         // PUT api/<PostsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<PostProcessedDto>> Put(Guid id, [FromBody] PostUpdateCommand command)
         {
+            try
+            {
+                command.PostID = id;
+                var result = await _mediator.Send(command).ConfigureAwait(false);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE api/<PostsController>/5

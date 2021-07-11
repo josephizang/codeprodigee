@@ -14,9 +14,9 @@ namespace CodeProdigee.API.Models
 
         public ResourceType PostResourceType { get; set; }
 
-        public List<Post> Posts { get; set; }
+        public List<Post> Posts { get; set; } = new();
 
-        public List<PostResources> PostResources { get; set; }
+        public List<PostResources> PostResources { get; set; } = new();
 
     }
 }

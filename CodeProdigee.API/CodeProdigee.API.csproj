@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Command\Post\" />
     <Folder Include="Dtos\Authors\" />
   </ItemGroup>
 

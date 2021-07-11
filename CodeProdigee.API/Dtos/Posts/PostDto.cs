@@ -24,11 +24,11 @@ namespace CodeProdigee.API.Dtos.Posts
 
         public Guid AuthorID { get; set; }
 
-        public List<TagDto> Tags { get; set; }
+        public List<TagDto> Tags { get; set; } = new();
 
-        public List<ResourceDto> Resources { get; set; }
+        public List<ResourceDto> Resources { get; set; } = new();
 
-        public List<CommentDto> Comments { get; set; }
+        public List<CommentDto> Comments { get; set; } = new();
         public Guid PostID { get; internal set; }
     }
 }

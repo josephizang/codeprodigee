@@ -35,7 +35,7 @@ namespace CodeProdigee.API
             services.AddDbContext<CodeProdigeeContext>(options => 
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
-                       .EnableSensitiveDataLogging();
+                .EnableSensitiveDataLogging();
             });
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();
