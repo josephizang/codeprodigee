@@ -1,12 +1,11 @@
-﻿using CodeProdigee.API.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CodeProdigee.API.Models
+namespace CodeProdigee.API.Dtos.Authors
 {
-    public class Author : DomainModelBase
+    public class AuthorsListDto
     {
         public string AuthorName { get; set; }
 
@@ -16,13 +15,9 @@ namespace CodeProdigee.API.Models
 
         public string AuthorGithub { get; set; }
 
-        public string AvatarImage { get; set; }
-
         public string Bio { get; set; }
 
-        public List<Post> AuthorPosts { get; set; }
-
-        public List<Comment> AuthorComments { get; set; }
+        public int AuthorPostsCount { get; set; }
 
     }
 }

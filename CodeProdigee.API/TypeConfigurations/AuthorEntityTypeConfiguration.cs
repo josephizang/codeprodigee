@@ -20,6 +20,12 @@ namespace CodeProdigee.API.TypeConfigurations
                 .IsRequired();
             builder.Property(a => a.AuthorTwitter)
                 .HasMaxLength(50);
+            builder.Property(a => a.AuthorGithub)
+                .HasMaxLength(50);
+            builder.Property(a => a.Bio)
+                .HasMaxLength(500);
+            builder.Property(a => a.AvatarImage)
+                .HasMaxLength(300);
             builder.HasMany(a => a.AuthorPosts)
                 .WithOne(p => p.PostAuthor)
                 .HasForeignKey(p => p.AuthorID);
