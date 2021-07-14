@@ -9,6 +9,8 @@ namespace CodeProdigee.API.Dtos.Authors
     {
         public string AuthorName { get; set; }
 
+        public DateTimeOffset DateJoined { get; set; }
+
         public string AuthorEmail { get; set; }
 
         public string AuthorTwitter { get; set; }
@@ -18,6 +20,8 @@ namespace CodeProdigee.API.Dtos.Authors
         public string Bio { get; set; }
 
         public int AuthorPostsCount { get; set; }
+
+        public Guid AuthorID { get; set; }
 
     }
 }

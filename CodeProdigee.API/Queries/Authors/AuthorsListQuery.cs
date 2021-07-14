@@ -1,6 +1,7 @@
 ﻿using CodeProdigee.API.Data;
 using CodeProdigee.API.Dtos.Authors;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,32 @@ namespace CodeProdigee.API.Queries.Authors
         }
         public async Task<List<AuthorsListDto>> Handle(AuthorsListQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _context.Authors.AsNoTracking()
+                        .Include(a => a.AuthorPosts)
+                        .Select(a => new AuthorsListDto
+                        {
+                            AuthorID = a.ID,
+                            Bio = a.Bio,
+                            AuthorGithub = a.AuthorGithub,
+                            AuthorEmail = a.AuthorEmail,
+                            AuthorName = a.AuthorName,
+                            AuthorTwitter = a.AuthorTwitter,
+                            AuthorPostsCount = a.AuthorPosts.Count,
+                            DateJoined = a.CreatedAt
+                        }).OrderBy(a => a.DateJoined)
+                        .ToListAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                // consider doing audit trail where visitors are tracked and stored in db or some other medium
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }

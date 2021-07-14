@@ -1,6 +1,8 @@
-﻿using CodeProdigee.API.Dtos.Authors;
+﻿using CodeProdigee.API.Command.Author;
+using CodeProdigee.API.Dtos.Authors;
 using CodeProdigee.API.Queries.Authors;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,8 @@ namespace CodeProdigee.API.Controllers
 
         // GET: api/<AuthorsController>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Produces("application/json")]
         public async Task<ActionResult<List<AuthorsListDto>>> GetAuthorsList()
         {
             var result = await _mediator.Send(new AuthorsListQuery()).ConfigureAwait(false);
@@ -30,16 +34,20 @@ namespace CodeProdigee.API.Controllers
         }
 
         // GET api/<AuthorsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetAuthorByID")]
+        public string Get(Guid id)
         {
             return "value";
         }
 
         // POST api/<AuthorsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult<AuthorProcessedDto>> Post([FromBody] AuthorCreateCommand command)
         {
+            var result = await _mediator.Send(command).ConfigureAwait(false);
+            return CreatedAtRoute("GetAuthorByID", result);
         }
 
         // PUT api/<AuthorsController>/5
