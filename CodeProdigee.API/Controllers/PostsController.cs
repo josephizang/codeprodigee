@@ -49,11 +49,11 @@ namespace CodeProdigee.API.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PostDto>> GetPostsById(Guid id)
+        public async Task<ActionResult<PostDto>> GetPostsById([FromBody]GetOnePostQuery query)
         {
             try
             {
-                var result = await _mediator.Send(new GetOnePostQuery()).ConfigureAwait(false);
+                var result = await _mediator.Send(query).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -62,15 +62,15 @@ namespace CodeProdigee.API.Controllers
             }
         }
 
-        [HttpGet("getpostbytitle/{title:string}", Name = "GetPostsByTitle")]
+        [HttpGet("getpostbytitle}", Name = "GetPostsByTitle")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PostDto>> GetPostsByTitle(string title)
+        public async Task<ActionResult<PostDto>> GetPostsByTitle([FromBody]GetPostByTitleQuery title)
         {
             try
             {
-                var result = await _mediator.Send(new GetOnePostQuery()).ConfigureAwait(false);
+                var result = await _mediator.Send(title).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -98,12 +98,14 @@ namespace CodeProdigee.API.Controllers
         }
 
         // PUT api/<PostsController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult<PostProcessedDto>> Put(Guid id, [FromBody] PostUpdateCommand command)
+        [HttpPut("updatePost", Name = "UpatePost")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PostProcessedDto>> UpdatePost([FromBody] PostUpdateCommand command)
         {
             try
             {
-                command.PostID = id;
                 var result = await _mediator.Send(command).ConfigureAwait(false);
                 return result;
             }
@@ -114,9 +116,20 @@ namespace CodeProdigee.API.Controllers
         }
 
         // DELETE api/<PostsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("deletePost", Name = "DeleteAPost")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete([FromBody] PostDeleteCommand command)
         {
+            try
+            {
+                var result = await _mediator.Send(command).ConfigureAwait(false);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ErrorMessage = ex.Message });
+            }
         }
     }
 }

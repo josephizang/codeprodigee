@@ -1,7 +1,5 @@
 ﻿using CodeProdigee.API.Data;
 using CodeProdigee.API.Dtos.Blogs;
-using Mapster;
-using MapsterMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,17 +20,22 @@ namespace CodeProdigee.API.Queries.Blogs
     public class BlogIndexQueryHandler : IRequestHandler<BlogIndexQuery, List<BlogDto>>
     {
         private readonly CodeProdigeeContext _context;
-        private readonly IMapper _mapper;
-        public BlogIndexQueryHandler(CodeProdigeeContext context, IMapper mapper)
+        public BlogIndexQueryHandler(CodeProdigeeContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<List<BlogDto>> Handle(BlogIndexQuery request, CancellationToken cancellationToken)
         {
-            var query = _context.Blogs.AsNoTracking();
-            var result = await _mapper.From(query).ProjectToType<BlogDto>().ToListAsync().ConfigureAwait(false);
+            var query = _context.Blogs.AsNoTracking().Include(b => b.Posts);
+            var result = await query.Select(b => new BlogDto
+            {
+                AdminName = b.AdminName,
+                BlogAdminEmail = b.BlogAdminEmail,
+                BlogID = b.ID,
+                BlogName = b.BlogName,
+                PostsCount = b.Posts.Count
+            }).ToListAsync(cancellationToken).ConfigureAwait(false);
             return result;
         }
     }

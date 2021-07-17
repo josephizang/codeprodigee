@@ -24,7 +24,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // GET: api/<AuthorsController>
-        [HttpGet]
+        [HttpGet("getAuthors",Name = "GetAuthorsList")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("application/json")]
         public async Task<ActionResult<List<AuthorsListDto>>> GetAuthorsList()
@@ -34,10 +34,41 @@ namespace CodeProdigee.API.Controllers
         }
 
         // GET api/<AuthorsController>/5
-        [HttpGet("{id}", Name = "GetAuthorByID")]
-        public string Get(Guid id)
+        [HttpGet("getAnAuthorById/{id:guid}", Name = "GetAuthorByID")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AuthorsListDto>> GetAuthorByID(Guid id)
         {
-            return "value";
+            var query = new GetOneAuthorQuery { AuthorID = id };
+            try
+            {
+                var result = await _mediator.Send(query).ConfigureAwait(false);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet("getAnAuthorByAny", Name = "GetAuthorByAny")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AuthorsListDto>> GetAuthorByEmailTwitterOrGithub([FromBody]GetOneAuthorByVariousQuery query)
+        {
+            try
+            {
+                var result = await _mediator.Send(query).ConfigureAwait(false);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // POST api/<AuthorsController>
@@ -52,15 +83,39 @@ namespace CodeProdigee.API.Controllers
         }
 
         // PUT api/<AuthorsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("updateAuthor", Name = "UpdateAuthor")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AuthorProcessedDto>> UpdateAuthor([FromBody] AuthorUpdateCommand command)
         {
+            try
+            {
+                var result = await _mediator.Send(command).ConfigureAwait(false);
+                return CreatedAtRoute("GetAuthorByID", result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ex.Message });
+            }
         }
 
         // DELETE api/<AuthorsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("deleteAuthor", Name = "DeleteAuthor")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Delete([FromBody]AuthorDeleteCommand command)
         {
+            try
+            {
+                var result = await _mediator.Send(command).ConfigureAwait(false);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ErrorMessage = ex.Message });
+            }
         }
     }
 }

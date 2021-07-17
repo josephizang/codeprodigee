@@ -1,11 +1,8 @@
 ﻿using CodeProdigee.API.Data;
 using CodeProdigee.API.Dtos.Blogs;
-using Mapster;
-using MapsterMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +19,7 @@ namespace CodeProdigee.API.Queries.Blogs
 
         private readonly CodeProdigeeContext _context;
 
-        public BlogGetByIdQueryHandler(IMapper mapper, CodeProdigeeContext context)
+        public BlogGetByIdQueryHandler(CodeProdigeeContext context)
         {
             _context = context;
         }

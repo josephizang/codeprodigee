@@ -12,6 +12,9 @@ namespace CodeProdigee.API.Queries.Authors
 {
     public class AuthorsListQuery : IRequest<List<AuthorsListDto>>
     {
+        public int PageSize { get; set; }
+
+        public int PageNumber { get; set; }
     }
 
 

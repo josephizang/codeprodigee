@@ -14,8 +14,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Mapster;
-using MapsterMapper;
 
 namespace CodeProdigee.API
 {
@@ -31,14 +29,11 @@ namespace CodeProdigee.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var config = new TypeAdapterConfig();
             services.AddDbContext<CodeProdigeeContext>(options => 
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
                 .EnableSensitiveDataLogging();
             });
-            services.AddSingleton(config);
-            services.AddScoped<IMapper, ServiceMapper>();
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
             services.AddSwaggerGen(c =>
