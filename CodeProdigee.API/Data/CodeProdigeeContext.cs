@@ -38,20 +38,35 @@ namespace CodeProdigee.API.Data
             builder.ApplyConfigurationsFromAssembly(typeof(Startup).Assembly);
 
             builder.Entity<Post>()
+                .HasQueryFilter(p => p.IsDeleted);
+            builder.Entity<Author>()
+                .HasQueryFilter(p => p.IsDeleted);
+            builder.Entity<Blog>()
+                .HasQueryFilter(p => p.IsDeleted);
+            builder.Entity<Tag>()
+                .HasQueryFilter(p => p.IsDeleted);
+            builder.Entity<Resource>()
+                .HasQueryFilter(p => p.IsDeleted);
+            builder.Entity<Comment>()
+                .HasQueryFilter(p => p.IsDeleted);
+            builder.Entity<Commentator>()
+                .HasQueryFilter(p => p.IsDeleted);
+
+            builder.Entity<Post>()
                 .HasMany(p => p.PostTags)
-                .WithOne(pt => pt.Post)
+                .WithOne()
                 .HasForeignKey(pt => pt.PostID);
             builder.Entity<Tag>()
                 .HasMany(t => t.PostTags)
-                .WithOne(pt => pt.Tag)
+                .WithOne()
                 .HasForeignKey(pt => pt.TagID);
             builder.Entity<Post>()
                 .HasMany(p => p.PostResources)
-                .WithOne(pr => pr.Post)
+                .WithOne()
                 .HasForeignKey(pr => pr.PostID);
             builder.Entity<Resource>()
                 .HasMany(r => r.PostResources)
-                .WithOne(pr => pr.Resource)
+                .WithOne()
                 .HasForeignKey(pr => pr.ResourceID);
 
             builder.Entity<PostResources>()

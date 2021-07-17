@@ -41,10 +41,11 @@ namespace CodeProdigee.API.Controllers
         }
 
         // POST api/<AuthorsController>
-        [HttpPost]
+        [HttpPost("createAuthor", Name = "CreateAuthor")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<AuthorProcessedDto>> Post([FromBody] AuthorCreateCommand command)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AuthorProcessedDto>> CreateAuthor([FromBody] AuthorCreateCommand command)
         {
             var result = await _mediator.Send(command).ConfigureAwait(false);
             return CreatedAtRoute("GetAuthorByID", result);

@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using CodeProdigee.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CodeProdigee.API.Migrations
 {
     [DbContext(typeof(CodeProdigeeContext))]
-    partial class CodeProdigeeContextModelSnapshot : ModelSnapshot
+    [Migration("20210717174448_EnableSoftDelete")]
+    partial class EnableSoftDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

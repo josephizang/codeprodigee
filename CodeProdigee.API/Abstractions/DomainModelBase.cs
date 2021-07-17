@@ -20,5 +20,6 @@ namespace CodeProdigee.API.Abstractions
         public DateTimeOffset UpdatedAt { get; set; }
         public string UpdatedBy { get; set; }
         public string CreatedBy { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

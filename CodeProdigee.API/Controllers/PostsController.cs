@@ -27,11 +27,11 @@ namespace CodeProdigee.API.Controllers
 
         // Look into enabling caching or working with redis as this will definitely be a hot path
         // GET: api/<PostsController>
-        [HttpGet]
+        [HttpGet("getallposts", Name = "GetAllPosts")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<PostDto>>> Get()
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts()
         {
             try
             {
@@ -45,11 +45,28 @@ namespace CodeProdigee.API.Controllers
         }
 
         // GET api/<PostsController>/5
-        [HttpGet("{id}")]
+        [HttpGet("getpostbyid/{id}", Name = "GetPostsById")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PostDto>> Get(Guid id)
+        public async Task<ActionResult<PostDto>> GetPostsById(Guid id)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetOnePostQuery()).ConfigureAwait(false);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ErrorMessage = ex.Message });
+            }
+        }
+
+        [HttpGet("getpostbytitle/{title:string}", Name = "GetPostsByTitle")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PostDto>> GetPostsByTitle(string title)
         {
             try
             {
@@ -63,11 +80,11 @@ namespace CodeProdigee.API.Controllers
         }
 
         // POST api/<PostsController>
-        [HttpPost]
+        [HttpPost("createPost", Name = "CreatePost")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PostProcessedDto>> Post([FromBody] PostCreateCommand command)
+        public async Task<ActionResult<PostProcessedDto>> CreatePost([FromBody] PostCreateCommand command)
         {
             try
             {
