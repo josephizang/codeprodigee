@@ -38,19 +38,19 @@ namespace CodeProdigee.API.Data
             builder.ApplyConfigurationsFromAssembly(typeof(Startup).Assembly);
 
             builder.Entity<Post>()
-                .HasQueryFilter(p => p.IsDeleted);
+                .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Author>()
-                .HasQueryFilter(p => p.IsDeleted);
+                .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Blog>()
-                .HasQueryFilter(p => p.IsDeleted);
+                .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Tag>()
-                .HasQueryFilter(p => p.IsDeleted);
+                .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Resource>()
-                .HasQueryFilter(p => p.IsDeleted);
+                .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Comment>()
-                .HasQueryFilter(p => p.IsDeleted);
+                .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Commentator>()
-                .HasQueryFilter(p => p.IsDeleted);
+                .HasQueryFilter(p => !p.IsDeleted);
 
             builder.Entity<Post>()
                 .HasMany(p => p.PostTags)

@@ -27,7 +27,7 @@ namespace CodeProdigee.API.Controllers
 
         // Look into enabling caching or working with redis as this will definitely be a hot path
         // GET: api/<PostsController>
-        [HttpGet("getallposts", Name = "GetAllPosts")]
+        [HttpGet(Name = "GetAllPosts")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -62,7 +62,7 @@ namespace CodeProdigee.API.Controllers
             }
         }
 
-        [HttpGet("getpostbytitle}", Name = "GetPostsByTitle")]
+        [HttpGet("getpostbytitle", Name = "GetPostsByTitle")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -98,7 +98,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // PUT api/<PostsController>/5
-        [HttpPut("updatePost", Name = "UpatePost")]
+        [HttpPut("{id:guid}/updatePost", Name = "UpatePost")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -116,10 +116,10 @@ namespace CodeProdigee.API.Controllers
         }
 
         // DELETE api/<PostsController>/5
-        [HttpDelete("deletePost", Name = "DeleteAPost")]
+        [HttpDelete("{id:guid}/deletePost", Name = "DeleteAPost")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Delete([FromBody] PostDeleteCommand command)
+        public async Task<ActionResult> Delete(Guid id, [FromBody] PostDeleteCommand command)
         {
             try
             {

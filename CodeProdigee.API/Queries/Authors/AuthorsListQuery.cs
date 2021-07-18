@@ -31,8 +31,9 @@ namespace CodeProdigee.API.Queries.Authors
         {
             try
             {
-                var result = await _context.Authors.AsNoTracking()
-                        .Include(a => a.AuthorPosts)
+                var query = _context.Authors.AsNoTracking()
+                        .Include(a => a.AuthorPosts);
+                var result = await query
                         .Select(a => new AuthorsListDto
                         {
                             AuthorID = a.ID,

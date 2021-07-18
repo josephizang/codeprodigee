@@ -24,7 +24,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // GET: api/<AuthorsController>
-        [HttpGet("getAuthors",Name = "GetAuthorsList")]
+        [HttpGet(Name = "GetAuthorsList")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("application/json")]
         public async Task<ActionResult<List<AuthorsListDto>>> GetAuthorsList()
@@ -72,7 +72,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // POST api/<AuthorsController>
-        [HttpPost("createAuthor", Name = "CreateAuthor")]
+        [HttpPost(Name = "CreateAuthor")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -83,11 +83,11 @@ namespace CodeProdigee.API.Controllers
         }
 
         // PUT api/<AuthorsController>/5
-        [HttpPut("updateAuthor", Name = "UpdateAuthor")]
+        [HttpPut("{id:guid}/updateAuthor", Name = "UpdateAuthor")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AuthorProcessedDto>> UpdateAuthor([FromBody] AuthorUpdateCommand command)
+        public async Task<ActionResult<AuthorProcessedDto>> UpdateAuthor(Guid id,[FromBody] AuthorUpdateCommand command)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // DELETE api/<AuthorsController>/5
-        [HttpDelete("deleteAuthor", Name = "DeleteAuthor")]
+        [HttpDelete("{id:guid}/deleteAuthor", Name = "DeleteAuthor")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
