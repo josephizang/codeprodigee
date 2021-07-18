@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Dtos.Resources
 {
-    public class ResourceDto
+    public class ResourceListDto
     {
         public string ResourceUrl { get; set; }
 
         public ResourceType Type { get; set; }
-        public Guid ResourceID { get; internal set; }
+
+        public Guid ResourceID { get; set; }
+
+        public DateTimeOffset DateCreated { get; set; }
     }
 }

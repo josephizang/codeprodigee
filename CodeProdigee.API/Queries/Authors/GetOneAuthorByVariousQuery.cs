@@ -12,11 +12,7 @@ namespace CodeProdigee.API.Queries.Authors
 {
     public class GetOneAuthorByVariousQuery : IRequest<AuthorsListDto>
     {
-        public string AuthorEmail { get; set; }
-
-        public string AuthorGithub { get; set; }
-
-        public string AuthorTwitter { get; set; }
+        public string SearchParam { get; set; }
 
     }
 
@@ -37,9 +33,9 @@ namespace CodeProdigee.API.Queries.Authors
                 var query = await _context.Authors.AsNoTracking()
                 .Include(a => a.AuthorPosts)
                 .Where(a => 
-                !string.IsNullOrEmpty(a.AuthorEmail) && a.AuthorEmail.Contains(request.AuthorEmail) &&
-                !string.IsNullOrEmpty(a.AuthorGithub) && a.AuthorGithub.Contains(request.AuthorGithub) &&
-                !string.IsNullOrEmpty(a.AuthorTwitter) && a.AuthorTwitter.Contains(request.AuthorTwitter)
+                !string.IsNullOrEmpty(a.AuthorEmail) && a.AuthorEmail.Contains(request.SearchParam) ||
+                !string.IsNullOrEmpty(a.AuthorGithub) && a.AuthorGithub.Contains(request.SearchParam) ||
+                !string.IsNullOrEmpty(a.AuthorTwitter) && a.AuthorTwitter.Contains(request.SearchParam)
                 ).Select(a => new AuthorsListDto
                 {
                     AuthorEmail = a.AuthorEmail,

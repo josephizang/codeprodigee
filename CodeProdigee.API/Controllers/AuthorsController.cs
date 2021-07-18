@@ -53,14 +53,15 @@ namespace CodeProdigee.API.Controllers
             }
         }
 
-        [HttpGet("getAnAuthorByAny", Name = "GetAuthorByAny")]
+        [HttpGet("getAnAuthorByAny/{payload}", Name = "GetAuthorByAny")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AuthorsListDto>> GetAuthorByEmailTwitterOrGithub([FromBody]GetOneAuthorByVariousQuery query)
+        public async Task<ActionResult<AuthorsListDto>> GetAuthorByEmailTwitterOrGithub(string payload)
         {
             try
             {
+                var query = new GetOneAuthorByVariousQuery { SearchParam = payload };
                 var result = await _mediator.Send(query).ConfigureAwait(false);
                 return Ok(result);
             }
@@ -83,7 +84,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // PUT api/<AuthorsController>/5
-        [HttpPut("{id:guid}/updateAuthor", Name = "UpdateAuthor")]
+        [HttpPut("updateAuthor/{id:guid}", Name = "UpdateAuthor")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -101,7 +102,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // DELETE api/<AuthorsController>/5
-        [HttpDelete("{id:guid}/deleteAuthor", Name = "DeleteAuthor")]
+        [HttpDelete("deleteAuthor/{id:guid}", Name = "DeleteAuthor")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
