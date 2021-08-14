@@ -1,4 +1,5 @@
-﻿using CodeProdigee.API.Dtos.Resources;
+﻿using CodeProdigee.API.Command.Resource;
+using CodeProdigee.API.Dtos.Resources;
 using CodeProdigee.API.Queries.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -62,20 +63,57 @@ namespace CodeProdigee.API.Controllers
 
         // POST api/<ResourcesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ResourceProcessedDto>> AddAResource([FromBody] ResourceCreateCommand command)
         {
+            try
+            {
+                var result = await _mediator.Send(command).ConfigureAwait(false);
+                return result is null ? new StatusCodeResult(406) : CreatedAtRoute("GetOneResouce", new { result.ResourceID });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
 
         // PUT api/<ResourcesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ResourceProcessedDto>> Put(Guid id, [FromBody] ResourceUpdateCommand updateCommand)
         {
+            try
+            {
+                updateCommand.ResourceID = id;
+                var result = await _mediator.Send(updateCommand).ConfigureAwait(false);
+                return result is null ? new StatusCodeResult(406) : Ok(new { result.ResourceID });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
 
         // DELETE api/<ResourcesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ResourceProcessedDto>> DeleteResource(ResourceDeleteCommand deleteCommand)
         {
+            try
+            {
+                var result = await _mediator.Send(deleteCommand).ConfigureAwait(false);
+                return result is null ? new StatusCodeResult(406) : NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
     }
 }

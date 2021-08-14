@@ -65,7 +65,7 @@ namespace CodeProdigee.API.Command.Post
                     AuthorID = author.ID,
                     Tags = tags
                 };
-                post.Resources = request.PostResources.Select(r => new Resource
+                post.Resources = request.PostResources.Select(r => new Models.Resource
                 {
                     ResourceUrl = r.ResourceUrl,
                     PostResourceType = r.Type

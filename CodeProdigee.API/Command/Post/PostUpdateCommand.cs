@@ -52,7 +52,7 @@ namespace CodeProdigee.API.Command.Post
                 targetPost.PostTitle = request.PostTitle;
                 targetPost.PostBody = request.PostBody;
                 targetPost.PublishPost = request.PublishPost;
-                var resources = request.Resources.Select(r => new Resource { ID = r }).ToList();
+                var resources = request.Resources.Select(r => new Models.Resource { ID = r }).ToList();
                 targetPost.Resources = resources;
 
                 if (!string.IsNullOrEmpty(request.NewTags) && request.NewTags.Length > 2)
