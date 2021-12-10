@@ -1,3 +1,4 @@
+using CodeProdigee.API.Core;
 using CodeProdigee.API.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,6 +34,9 @@ namespace CodeProdigee.API
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
 
+            var jwtSettings = Configuration.GetSection("JwtSettings");
+            services.Configure<JwtSettings>(jwtSettings);
+
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -44,7 +48,7 @@ namespace CodeProdigee.API
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("somesecret")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     RequireExpirationTime = false,
