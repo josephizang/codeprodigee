@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CodeProdigee.API.Data
 {
-    public class CodeProdigeeContext : IdentityDbContext
+    public class CodeProdigeeContext : IdentityDbContext<ApplicationUser>
     {
         public CodeProdigeeContext(DbContextOptions<CodeProdigeeContext> options) : base(options)
         {
@@ -32,6 +32,7 @@ namespace CodeProdigee.API.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(typeof(Startup).Assembly);
 
             builder.Entity<Post>()
@@ -50,26 +51,11 @@ namespace CodeProdigee.API.Data
                 .HasQueryFilter(p => !p.IsDeleted);
 
             builder.Entity<Post>()
-                .HasMany(p => p.PostTags)
-                .WithOne()
-                .HasForeignKey(pt => pt.PostID);
-            builder.Entity<Tag>()
-                .HasMany(t => t.PostTags)
-                .WithOne()
-                .HasForeignKey(pt => pt.TagID);
+                .HasMany(p => p.Tags)
+                .WithMany(t => t.Posts);
             builder.Entity<Post>()
-                .HasMany(p => p.PostResources)
-                .WithOne()
-                .HasForeignKey(pr => pr.PostID);
-            builder.Entity<Resource>()
-                .HasMany(r => r.PostResources)
-                .WithOne()
-                .HasForeignKey(pr => pr.ResourceID);
-
-            builder.Entity<PostResources>()
-                .HasKey(pr => new { pr.PostID, pr.ResourceID });
-            builder.Entity<PostTags>()
-                .HasKey(pt => new { pt.PostID, pt.TagID });
+                .HasMany(p => p.Resources)
+                .WithMany(r => r.Posts);
         }
     }
 }

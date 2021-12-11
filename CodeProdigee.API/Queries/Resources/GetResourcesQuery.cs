@@ -13,7 +13,7 @@ namespace CodeProdigee.API.Queries.Resources
     public class GetResourcesQuery : IRequest<List<ResourceListDto>>
     {
         public string SearchString { get; set; } = "";
-        
+
         public int PageNumber { get; set; }
 
         public int PageSize { get; set; }
@@ -35,14 +35,14 @@ namespace CodeProdigee.API.Queries.Resources
             try
             {
                 var query = await _context.Resources.AsNoTracking()
-                .Include(r => r.PostResources)
+                .Include(r => r.Posts)
                 .Select(r => new ResourceListDto
                 {
                     DateCreated = r.CreatedAt,
                     ResourceID = r.ID,
                     ResourceUrl = r.ResourceUrl,
                     Type = r.PostResourceType,
-                    NumberOfUses = r.PostResources.Count
+                    NumberOfUses = r.Posts.Count
                 }).ToListAsync(cancellationToken).ConfigureAwait(false);
                 return query;
             }

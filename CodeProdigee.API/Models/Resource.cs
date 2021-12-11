@@ -1,8 +1,5 @@
 ﻿using CodeProdigee.API.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Models
 {
@@ -15,8 +12,6 @@ namespace CodeProdigee.API.Models
         public ResourceType PostResourceType { get; set; }
 
         public List<Post> Posts { get; set; } = new();
-
-        public List<PostResources> PostResources { get; set; } = new();
 
     }
 }

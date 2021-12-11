@@ -1,3 +1,4 @@
+using CodeProdigee.API.Abstractions;
 using CodeProdigee.API.Core;
 using CodeProdigee.API.Data;
 using MediatR;
@@ -33,6 +34,7 @@ namespace CodeProdigee.API
             });
 
             services.AddMediatR(typeof(Startup));
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddControllers();
 
             var jwtSettings = Configuration.GetSection("JwtSettings");
