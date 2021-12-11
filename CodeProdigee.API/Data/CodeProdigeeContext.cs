@@ -1,13 +1,10 @@
 ﻿using CodeProdigee.API.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Data
 {
-    public class CodeProdigeeContext : DbContext
+    public class CodeProdigeeContext : IdentityDbContext
     {
         public CodeProdigeeContext(DbContextOptions<CodeProdigeeContext> options) : base(options)
         {

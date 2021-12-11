@@ -31,6 +31,7 @@ namespace CodeProdigee.API
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
                 .EnableSensitiveDataLogging();
             });
+
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
 
