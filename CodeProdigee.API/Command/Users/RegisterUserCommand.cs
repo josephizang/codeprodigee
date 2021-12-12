@@ -13,7 +13,6 @@ namespace CodeProdigee.API.Command.Users
 
         public string Password { get; set; }
 
-        public string FullName { get; set; }
     }
 
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, UserRegistrationResponse>

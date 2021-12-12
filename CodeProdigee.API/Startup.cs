@@ -1,6 +1,8 @@
 using CodeProdigee.API.Abstractions;
 using CodeProdigee.API.Core;
 using CodeProdigee.API.Data;
+using CodeProdigee.API.Models;
+using CodeProdigee.API.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +37,8 @@ namespace CodeProdigee.API
 
             services.AddMediatR(typeof(Startup));
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddIdentityCore<ApplicationUser>()
+                .AddEntityFrameworkStores<CodeProdigeeContext>();
             services.AddControllers();
 
             var jwtSettings = Configuration.GetSection("JwtSettings");
