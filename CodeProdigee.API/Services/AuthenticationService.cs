@@ -19,13 +19,14 @@ namespace CodeProdigee.API.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly JwtSettings _jwtOptions;
+        private readonly JwtSettings _jwtSettings;
+        private IOptions<JwtSettings> _jwtOptions;
         private UserRegistrationResponse response = new UserRegistrationResponse();
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtOptions)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, JwtSettings jwtSettings)
         {
             _userManager = userManager;
-            _jwtOptions = jwtOptions.Value;
+            _jwtSettings = jwtSettings;
         }
 
 
@@ -52,10 +53,11 @@ namespace CodeProdigee.API.Services
             if (!newUserCreated.Succeeded)
             {
                 response.Error = newUserCreated.Errors.Select(x => x.Description).ToList();
+                return response;
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtOptions.SecretKey);
+            var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

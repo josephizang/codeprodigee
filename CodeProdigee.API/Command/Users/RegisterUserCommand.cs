@@ -1,13 +1,12 @@
 ﻿using CodeProdigee.API.Abstractions;
 using CodeProdigee.API.Dtos.Users;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Command.Users
 {
-    public class RegisterUserCommand : IRequest<UserRegistrationResponse>
+    public class RegisterUserCommand : IRequest<AuthResponse>
     {
         public string Email { get; set; }
 
@@ -15,7 +14,7 @@ namespace CodeProdigee.API.Command.Users
 
     }
 
-    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, UserRegistrationResponse>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, AuthResponse>
     {
         private readonly IAuthenticationService _auth;
 
@@ -23,9 +22,19 @@ namespace CodeProdigee.API.Command.Users
         {
             _auth = authService;
         }
-        public Task<UserRegistrationResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<AuthResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var authResponse = new AuthResponse();
+            var response = await _auth.RegisterUser(request).ConfigureAwait(false);
+
+            if (!response.Success)
+            {
+                authResponse.FailureResponse.Errors = response.Error;
+                return authResponse;
+            }
+
+            authResponse.RegistrationResponse.Token = response.Token;
+            return authResponse;
         }
     }
 }

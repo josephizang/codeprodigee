@@ -1,13 +1,13 @@
 ﻿using CodeProdigee.API.Command.Post;
 using CodeProdigee.API.Dtos.Posts;
-using CodeProdigee.API.EventNotifications.Posts;
 using CodeProdigee.API.Queries.Posts;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -51,7 +51,7 @@ namespace CodeProdigee.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PostDto>> GetPostsById([FromBody]GetOnePostQuery query)
+        public async Task<ActionResult<PostDto>> GetPostsById([FromBody] GetOnePostQuery query)
         {
             try
             {
@@ -85,6 +85,7 @@ namespace CodeProdigee.API.Controllers
         }
 
         // POST api/<PostsController>
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("createPost", Name = "CreatePost")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]

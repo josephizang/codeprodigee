@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+using SecurityDriven.Core;
+using System;
 
 namespace CodeProdigee.API.Abstractions
 {
@@ -9,8 +8,9 @@ namespace CodeProdigee.API.Abstractions
     {
         public DomainModelBase()
         {
+            var cryptorand = new CryptoRandom();
             if (ID == Guid.Empty)
-                ID = Guid.NewGuid();
+                ID = cryptorand.NextGuid();
             if (CreatedAt == DateTimeOffset.MinValue)
                 CreatedAt = DateTimeOffset.UtcNow;
             UpdatedAt = CreatedAt;

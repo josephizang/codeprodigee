@@ -23,7 +23,7 @@ namespace CodeProdigee.API.Controllers
         public async Task<IActionResult> RegisterUsers([FromBody] RegisterUserCommand command)
         {
             var result = await _mediator.Send(command).ConfigureAwait(false);
-            return Ok(result);
+            return string.IsNullOrEmpty(result.RegistrationResponse.Token) ? BadRequest(result.FailureResponse.Errors) : Ok(result.RegistrationResponse);
         }
     }
 }

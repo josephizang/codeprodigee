@@ -41,9 +41,10 @@ namespace CodeProdigee.API
                 .AddEntityFrameworkStores<CodeProdigeeContext>();
             services.AddControllers();
 
-            var jwtSettings = Configuration.GetSection("JwtSettings");
-            services.Configure<JwtSettings>(jwtSettings);
-
+            var jwtSettings = new JwtSettings();
+            Configuration.Bind(nameof(jwtSettings), jwtSettings);
+            services.AddSingleton(jwtSettings);
+            var jwtBytes = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,7 +56,7 @@ namespace CodeProdigee.API
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(jwtBytes),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     RequireExpirationTime = false,
@@ -65,7 +66,28 @@ namespace CodeProdigee.API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeProdigee.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeProdigee.API", Version = "v1", Description = "Backend API for CodeProdigee" });
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Auth Header with bearer scheme",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                var security = new OpenApiSecurityRequirement
+                {
+                    { securityScheme, new string[] {} }
+                };
+
+                c.AddSecurityDefinition("Bearer", securityScheme);
+                c.AddSecurityRequirement(security);
             });
         }
 
@@ -79,9 +101,14 @@ namespace CodeProdigee.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeProdigee.API v1"));
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeProdigee.API v1"));
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="CryptoRandom" Version="1.0.7" />
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
@@ -23,6 +25,12 @@
     <PackageReference Include="Npgsql" Version="6.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SecurityDriven.Inferno">
+      <HintPath>..\..\SecurityDriven.Inferno.v1.5.3.0\netcoreapp2.1\SecurityDriven.Inferno.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
