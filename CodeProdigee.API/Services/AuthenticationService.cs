@@ -21,7 +21,7 @@ namespace CodeProdigee.API.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private IOptions<JwtSettings> _jwtOptions;
-        private UserRegistrationResponse response = new UserRegistrationResponse();
+        private AuthResponse response = new();
 
         public AuthenticationService(UserManager<ApplicationUser> userManager, JwtSettings jwtSettings)
         {
@@ -30,17 +30,25 @@ namespace CodeProdigee.API.Services
         }
 
 
-        public Task<UserLoginResponse> Login(UserLoginQuery command)
+        public async Task<AuthResponse> Login(UserLoginQuery query)
         {
-            throw new System.NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(query.Email).ConfigureAwait(false);
+            if (user is null)
+            {
+                response.FailureResponse.Errors.Add("User doesn't exist!");
+                return response;
+            }
+
+            var passwordValid = await _userManager.CheckPasswordAsync(user, query.Password).ConfigureAwait(false);
+            return GenerateAuthResponse(user);
         }
 
-        public async Task<UserRegistrationResponse> RegisterUser(RegisterUserCommand command)
+        public async Task<AuthResponse> RegisterUser(RegisterUserCommand command)
         {
             var userExists = await _userManager.FindByEmailAsync(command.Email).ConfigureAwait(false);
             if (userExists is not null)
             {
-                response.Error.Add("User with this email already exists!");
+                response.FailureResponse.Errors.Add("User with this email already exists!");
                 return response;
             }
             var newUser = new ApplicationUser
@@ -52,10 +60,15 @@ namespace CodeProdigee.API.Services
 
             if (!newUserCreated.Succeeded)
             {
-                response.Error = newUserCreated.Errors.Select(x => x.Description).ToList();
+                response.FailureResponse.Errors = newUserCreated.Errors.Select(x => x.Description).ToList();
                 return response;
             }
 
+            return GenerateAuthResponse(newUser);
+        }
+
+        private AuthResponse GenerateAuthResponse(ApplicationUser newUser)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -71,9 +84,15 @@ namespace CodeProdigee.API.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            response.Success = true;
-            response.Token = tokenHandler.WriteToken(token);
-            return response;
+            response.RegistrationResponse.Success = true;
+            response.RegistrationResponse.Token = tokenHandler.WriteToken(token);
+            return new AuthResponse
+            {
+                SuccessResponse = new AuthSuccessResponse
+                {
+                    Token = response.RegistrationResponse.Token,
+                }
+            };
         }
     }
 }

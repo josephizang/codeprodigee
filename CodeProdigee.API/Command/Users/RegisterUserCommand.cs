@@ -27,13 +27,10 @@ namespace CodeProdigee.API.Command.Users
             var authResponse = new AuthResponse();
             var response = await _auth.RegisterUser(request).ConfigureAwait(false);
 
-            if (!response.Success)
+            if (!response.RegistrationResponse.Success)
             {
-                authResponse.FailureResponse.Errors = response.Error;
                 return authResponse;
             }
-
-            authResponse.RegistrationResponse.Token = response.Token;
             return authResponse;
         }
     }

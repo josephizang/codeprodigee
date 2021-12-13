@@ -7,8 +7,8 @@ namespace CodeProdigee.API.Abstractions
 {
     public interface IAuthenticationService
     {
-        Task<UserRegistrationResponse> RegisterUser(RegisterUserCommand command);
+        Task<AuthResponse> RegisterUser(RegisterUserCommand command);
 
-        Task<UserLoginResponse> Login(UserLoginQuery command);
+        Task<AuthResponse> Login(UserLoginQuery command);
     }
 }

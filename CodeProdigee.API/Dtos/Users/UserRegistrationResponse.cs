@@ -17,7 +17,7 @@ namespace CodeProdigee.API.Dtos.Users
 
     public class AuthFailureResponse
     {
-        public IEnumerable<string> Errors { get; set; } = new List<string>();
+        public List<string> Errors { get; set; } = new List<string>();
     }
 
     public class AuthSuccessResponse
@@ -34,14 +34,18 @@ namespace CodeProdigee.API.Dtos.Users
     {
         public AuthResponse()
         {
-            RegistrationResponse = new();
+            SuccessResponse = new();
             FailureResponse = new();
             LoginResponse = new();
+            RegistrationResponse = new();
         }
-        public AuthSuccessResponse RegistrationResponse { get; set; }
+        public AuthSuccessResponse SuccessResponse { get; set; }
 
         public AuthFailureResponse FailureResponse { get; set; }
 
         public UserLoginResponse LoginResponse { get; set; }
+
+        public UserRegistrationResponse RegistrationResponse { get; set; }
+
     }
 }
