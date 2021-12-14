@@ -25,9 +25,13 @@ namespace CodeProdigee.API.Queries.Users
         public async Task<AuthResponse> Handle(UserLoginQuery request, CancellationToken cancellationToken)
         {
             var response = await _service.Login(request).ConfigureAwait(false);
-            if (response.RegistrationResponse.Error.Count > 0) return response;
+            if (response.FailureResponse.Errors.Count > 0) return response;
+            response.LoginResponse = new UserLoginResponse
+            {
+                Token = response.SuccessResponse.Token,
+                LoginSuccessful = true
+            };
             return response;
-
         }
     }
 }

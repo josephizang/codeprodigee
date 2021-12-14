@@ -40,6 +40,11 @@ namespace CodeProdigee.API.Services
             }
 
             var passwordValid = await _userManager.CheckPasswordAsync(user, query.Password).ConfigureAwait(false);
+            if (!passwordValid)
+            {
+                response.FailureResponse.Errors.Add("Login was unsuccessful!");
+                return response;
+            }
             return GenerateAuthResponse(user);
         }
 

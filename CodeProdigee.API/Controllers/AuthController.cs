@@ -31,7 +31,7 @@ namespace CodeProdigee.API.Controllers
         public async Task<IActionResult> LoginUser([FromBody] UserLoginQuery query)
         {
             var result = await _mediator.Send(query).ConfigureAwait(false);
-            return string.IsNullOrEmpty(result.RegistrationResponse.Token) ? BadRequest(result.FailureResponse.Errors) : Ok(result.RegistrationResponse);
+            return string.IsNullOrEmpty(result.LoginResponse.Token) ? BadRequest(result.FailureResponse) : Ok(result.LoginResponse);
         }
     }
 }
