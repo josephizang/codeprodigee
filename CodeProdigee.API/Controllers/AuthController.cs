@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CodeProdigee.API.Controllers
 {
     [ApiController]
-    [Route("identify")]
+    [Route("auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthenticationService _authService;

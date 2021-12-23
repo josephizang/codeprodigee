@@ -20,9 +20,9 @@ namespace CodeProdigee.API.Models
 
         public bool PublishPost { get; set; }
 
-        public Author PostAuthor { get; set; }
+        public ApplicationUser PostAuthor { get; set; }
 
-        public Guid AuthorID { get; set; }
+        public string AuthorID { get; set; }
 
         public List<Tag> Tags { get; set; } = new();
 

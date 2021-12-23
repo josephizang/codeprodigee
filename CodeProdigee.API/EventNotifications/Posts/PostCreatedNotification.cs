@@ -1,8 +1,5 @@
 ﻿using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CodeProdigee.API.EventNotifications.Posts
 {
@@ -11,7 +8,11 @@ namespace CodeProdigee.API.EventNotifications.Posts
         public Guid PostID { get; set; }
         public string PostTitle { get; set; }
 
-        public string AuthorName { get; set; }
+        public string AuthorFirstName { get; set; }
+
+        public string AuthorLastName { get; set; }
+
+        public string AuthorId { get; set; }
 
         public DateTimeOffset PublishedAt { get; set; }
 

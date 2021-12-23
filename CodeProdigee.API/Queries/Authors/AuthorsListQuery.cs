@@ -1,6 +1,8 @@
 ﻿using CodeProdigee.API.Data;
 using CodeProdigee.API.Dtos.Authors;
+using CodeProdigee.API.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,25 +24,28 @@ namespace CodeProdigee.API.Queries.Authors
     {
         private readonly CodeProdigeeContext _context;
         private readonly IMediator _mediator;
-        public AuthorsListQueryHandler(CodeProdigeeContext context, IMediator mediator)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public AuthorsListQueryHandler(CodeProdigeeContext context, IMediator mediator, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _mediator = mediator;
+            _userManager = userManager;
         }
         public async Task<List<AuthorsListDto>> Handle(AuthorsListQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var query = _context.Authors.AsNoTracking()
-                        .Include(a => a.AuthorPosts);
+                var query = _userManager.Users.AsNoTracking();
                 var result = await query
                         .Select(a => new AuthorsListDto
                         {
-                            AuthorID = a.ID,
+                            AuthorID = Guid.Parse(a.Id),
                             Bio = a.Bio,
                             AuthorGithub = a.AuthorGithub,
-                            AuthorEmail = a.AuthorEmail,
-                            AuthorName = a.AuthorName,
+                            AuthorEmail = a.Email,
+                            FirstName = a.FirstName,
+                            LastName = a.LastName,
                             AuthorTwitter = a.AuthorTwitter,
                             AuthorPostsCount = a.AuthorPosts.Count,
                             DateJoined = a.CreatedAt

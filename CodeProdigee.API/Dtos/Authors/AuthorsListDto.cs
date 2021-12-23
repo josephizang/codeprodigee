@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Dtos.Authors
 {
     public class AuthorsListDto
     {
-        public string AuthorName { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public DateTimeOffset DateJoined { get; set; }
 

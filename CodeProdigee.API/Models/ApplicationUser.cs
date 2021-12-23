@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CodeProdigee.API.Abstractions;
+using System.Collections.Generic;
 
 namespace CodeProdigee.API.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : BaseIdentityUser
     {
         public string FirstName { get; set; }
 
@@ -12,5 +13,14 @@ namespace CodeProdigee.API.Models
 
         public string AvatarImageUrl { get; set; }
 
+        public string AuthorTwitter { get; set; }
+
+        public string AuthorGithub { get; set; }
+
+        public string Bio { get; set; }
+
+        public List<Post> AuthorPosts { get; set; }
+
+        public List<Comment> AuthorComments { get; set; }
     }
 }

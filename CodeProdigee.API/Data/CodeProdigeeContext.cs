@@ -20,8 +20,6 @@ namespace CodeProdigee.API.Data
 
         public DbSet<Post> Posts { get; set; }
 
-        public DbSet<Author> Authors { get; set; }
-
         public DbSet<Tag> Tags { get; set; }
 
         public DbSet<Resource> Resources { get; set; }
@@ -37,7 +35,7 @@ namespace CodeProdigee.API.Data
 
             builder.Entity<Post>()
                 .HasQueryFilter(p => !p.IsDeleted);
-            builder.Entity<Author>()
+            builder.Entity<ApplicationUser>()
                 .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Blog>()
                 .HasQueryFilter(p => !p.IsDeleted);

@@ -1,31 +1,19 @@
 ﻿using CodeProdigee.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CodeProdigee.API.TypeConfigurations
 {
-    public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
+    public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
-        public void Configure(EntityTypeBuilder<Author> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.Property(a => a.AuthorName)
-                .HasMaxLength(100)
-                .IsRequired();
-            builder.Property(a => a.AuthorEmail)
-                .HasMaxLength(100)
-                .IsRequired();
             builder.Property(a => a.AuthorTwitter)
                 .HasMaxLength(50);
             builder.Property(a => a.AuthorGithub)
                 .HasMaxLength(50);
             builder.Property(a => a.Bio)
                 .HasMaxLength(500);
-            builder.Property(a => a.AvatarImage)
-                .HasMaxLength(300);
             builder.HasMany(a => a.AuthorPosts)
                 .WithOne(p => p.PostAuthor)
                 .HasForeignKey(p => p.AuthorID);

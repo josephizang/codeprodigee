@@ -6,7 +6,6 @@ using CodeProdigee.API.Dtos.Resources;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,9 +40,9 @@ namespace CodeProdigee.API.Queries.Posts
                     PublishDate = p.PublishDate,
                     Postbody = p.PostBody,
                     PostTitle = p.PostTitle,
-                    PostAuthor = p.PostAuthor.AuthorName,
+                    PostAuthor = $"{p.PostAuthor.FirstName} {p.PostAuthor.LastName}",
                     PostDate = p.PostDate,
-                    AuthorID = p.AuthorID,
+                    AuthorID = Guid.Parse(p.AuthorID),
                     PostID = p.ID,
                     PublishPost = p.PublishPost,
                     Resources = p.Resources.Select(r => new ResourceDto { ResourceUrl = r.ResourceUrl, Type = r.PostResourceType }).ToList(),

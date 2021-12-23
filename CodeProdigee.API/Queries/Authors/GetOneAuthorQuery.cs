@@ -1,9 +1,10 @@
 ﻿using CodeProdigee.API.Data;
 using CodeProdigee.API.Dtos.Authors;
+using CodeProdigee.API.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,25 +20,27 @@ namespace CodeProdigee.API.Queries.Authors
     {
         private readonly CodeProdigeeContext _context;
         private readonly IMediator _mediator;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GetOneAuthorQueryHandler(CodeProdigeeContext context, IMediator mediator)
+        public GetOneAuthorQueryHandler(CodeProdigeeContext context, IMediator mediator, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _mediator = mediator;
+            _userManager = userManager;
         }
         public async Task<AuthorsListDto> Handle(GetOneAuthorQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var query = await _context.Authors.AsNoTracking()
+                var query = await _userManager.Users.AsNoTracking()
                 .Include(a => a.AuthorPosts)
-                .Where(a => a.ID == request.AuthorID)
+                .Where(a => a.Id == request.AuthorID.ToString())
                 .Select(a => new AuthorsListDto
                 {
-                    AuthorEmail = a.AuthorEmail,
+                    AuthorEmail = a.Email,
                     AuthorGithub = a.AuthorGithub,
-                    AuthorID = a.ID,
-                    AuthorName = a.AuthorName,
+                    AuthorID = Guid.Parse(a.Id),
+                    FirstName = a.FirstName,
                     AuthorTwitter = a.AuthorTwitter,
                     Bio = a.Bio,
                     DateJoined = a.CreatedAt,

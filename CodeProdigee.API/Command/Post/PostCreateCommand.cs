@@ -1,15 +1,16 @@
 ﻿using CodeProdigee.API.Data;
-using CodeProdigee.API.Models;
 using CodeProdigee.API.Dtos.Posts;
 using CodeProdigee.API.Dtos.Resources;
+using CodeProdigee.API.EventNotifications.Posts;
+using CodeProdigee.API.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using CodeProdigee.API.EventNotifications.Posts;
 
 namespace CodeProdigee.API.Command.Post
 {
@@ -34,18 +35,19 @@ namespace CodeProdigee.API.Command.Post
     {
         private readonly CodeProdigeeContext _context;
         private readonly IMediator _mediator;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PostCreateCommandHandler(CodeProdigeeContext context, IMediator mediator)
+        public PostCreateCommandHandler(CodeProdigeeContext context, IMediator mediator, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _mediator = mediator;
+            _userManager = userManager;
         }
         public async Task<PostProcessedDto> Handle(PostCreateCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var author = await _context.Authors.Where(a => a.AuthorEmail.Equals(request.AuthorEmail))
-                    .SingleOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+                var author = await _userManager.FindByEmailAsync(request.AuthorEmail).ConfigureAwait(false);
 
                 var rawTags = request.PostTags.Split(',');
                 var count = 0;
@@ -62,7 +64,7 @@ namespace CodeProdigee.API.Command.Post
                     PostBody = request.PostBody,
                     PostAuthor = author,
                     PublishPost = request.Publish,
-                    AuthorID = author.ID,
+                    AuthorID = author.Id,
                     Tags = tags
                 };
                 post.Resources = request.PostResources.Select(r => new Models.Resource
@@ -81,7 +83,9 @@ namespace CodeProdigee.API.Command.Post
                                       .Where(p => p.ID == post.ID)
                                       .Select(p => new PostCreatedNotification
                                       {
-                                          AuthorName = p.PostAuthor.AuthorName,
+                                          AuthorFirstName = p.PostAuthor.FirstName,
+                                          AuthorLastName = p.PostAuthor.LastName,
+                                          AuthorId = p.PostAuthor.Id,
                                           PostTitle = p.PostTitle,
                                           PublishedAt = p.PublishDate,
                                           ResourceLink = p.Resources.FirstOrDefault().ResourceUrl

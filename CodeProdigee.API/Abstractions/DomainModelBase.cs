@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using SecurityDriven.Core;
 using System;
 
@@ -16,6 +17,21 @@ namespace CodeProdigee.API.Abstractions
             UpdatedAt = CreatedAt;
         }
         public Guid ID { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
+        public string UpdatedBy { get; set; }
+        public string CreatedBy { get; set; }
+        public bool IsDeleted { get; set; }
+    }
+
+    public class BaseIdentityUser : IdentityUser
+    {
+        public BaseIdentityUser()
+        {
+            if (CreatedAt == DateTimeOffset.MinValue)
+                CreatedAt = DateTimeOffset.UtcNow;
+            UpdatedAt = CreatedAt;
+        }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
         public string UpdatedBy { get; set; }

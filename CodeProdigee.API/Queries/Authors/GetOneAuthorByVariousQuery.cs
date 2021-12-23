@@ -1,9 +1,10 @@
 ﻿using CodeProdigee.API.Data;
 using CodeProdigee.API.Dtos.Authors;
+using CodeProdigee.API.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,27 +22,31 @@ namespace CodeProdigee.API.Queries.Authors
     {
         private readonly CodeProdigeeContext _context;
         private readonly IMediator _mediator;
-        public GetOneAuthorByVariousQueryHandler(CodeProdigeeContext context, IMediator mediator)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public GetOneAuthorByVariousQueryHandler(CodeProdigeeContext context, IMediator mediator, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _mediator = mediator;
+            _userManager = userManager;
         }
         public async Task<AuthorsListDto> Handle(GetOneAuthorByVariousQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var query = await _context.Authors.AsNoTracking()
+                var query = await _userManager.Users.AsNoTracking()
                 .Include(a => a.AuthorPosts)
-                .Where(a => 
-                !string.IsNullOrEmpty(a.AuthorEmail) && a.AuthorEmail.Contains(request.SearchParam) ||
+                .Where(a =>
+                !string.IsNullOrEmpty(a.Email) && a.Email.Contains(request.SearchParam) ||
                 !string.IsNullOrEmpty(a.AuthorGithub) && a.AuthorGithub.Contains(request.SearchParam) ||
                 !string.IsNullOrEmpty(a.AuthorTwitter) && a.AuthorTwitter.Contains(request.SearchParam)
                 ).Select(a => new AuthorsListDto
                 {
-                    AuthorEmail = a.AuthorEmail,
+                    AuthorEmail = a.Email,
                     AuthorGithub = a.AuthorGithub,
-                    AuthorID = a.ID,
-                    AuthorName = a.AuthorName,
+                    AuthorID = Guid.Parse(a.Id),
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
                     AuthorTwitter = a.AuthorTwitter,
                     Bio = a.Bio,
                     DateJoined = a.CreatedAt,

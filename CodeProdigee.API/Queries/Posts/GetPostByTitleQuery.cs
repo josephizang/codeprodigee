@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,8 +47,8 @@ namespace CodeProdigee.API.Queries.Posts
                 {
                     PublishDate = p.PublishDate,
                     PostTitle = p.PostTitle,
-                    PostAuthor = p.PostAuthor.AuthorName,
-                    AuthorID = p.AuthorID,
+                    PostAuthor = $"{p.PostAuthor.FirstName} {p.PostAuthor.LastName}",
+                    AuthorID = Guid.Parse(p.AuthorID),
                     PostID = p.ID,
                     PublishPost = p.PublishPost,
                     PostDate = p.PostDate,
