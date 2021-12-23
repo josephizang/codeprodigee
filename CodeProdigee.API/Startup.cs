@@ -39,6 +39,7 @@ namespace CodeProdigee.API
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddIdentityCore<ApplicationUser>()
                 .AddEntityFrameworkStores<CodeProdigeeContext>();
+            services.AddHttpContextAccessor();
             services.AddControllers();
 
             var jwtSettings = new JwtSettings();

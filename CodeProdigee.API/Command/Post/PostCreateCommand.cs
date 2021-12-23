@@ -1,4 +1,5 @@
 ﻿using CodeProdigee.API.Data;
+using CodeProdigee.API.Dtos;
 using CodeProdigee.API.Dtos.Posts;
 using CodeProdigee.API.Dtos.Resources;
 using CodeProdigee.API.EventNotifications.Posts;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Command.Post
 {
-    public class PostCreateCommand : IRequest<PostProcessedDto>
+    public class PostCreateCommand : IRequest<Response<PostProcessedDto>>
     {
         public string PostTitle { get; set; }
 
@@ -26,12 +27,10 @@ namespace CodeProdigee.API.Command.Post
 
         public string AuthorEmail { get; set; }
 
-        public string AuthorName { get; set; }
-
         public List<ResourceDto> PostResources { get; set; } = new();
     }
 
-    public class PostCreateCommandHandler : IRequestHandler<PostCreateCommand, PostProcessedDto>
+    public class PostCreateCommandHandler : IRequestHandler<PostCreateCommand, Response<PostProcessedDto>>
     {
         private readonly CodeProdigeeContext _context;
         private readonly IMediator _mediator;
@@ -43,11 +42,13 @@ namespace CodeProdigee.API.Command.Post
             _mediator = mediator;
             _userManager = userManager;
         }
-        public async Task<PostProcessedDto> Handle(PostCreateCommand request, CancellationToken cancellationToken)
+        public async Task<Response<PostProcessedDto>> Handle(PostCreateCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var author = await _userManager.FindByEmailAsync(request.AuthorEmail).ConfigureAwait(false);
+
+                if (author is null) return new Response<PostProcessedDto>("An author with this email doesn't exist");
 
                 var rawTags = request.PostTags.Split(',');
                 var count = 0;
@@ -91,7 +92,7 @@ namespace CodeProdigee.API.Command.Post
                                           ResourceLink = p.Resources.FirstOrDefault().ResourceUrl
                                       }).SingleOrDefaultAsync(cancellationToken).ConfigureAwait(false);
                 await _mediator.Publish<PostCreatedNotification>(notification).ConfigureAwait(false);
-                return new PostProcessedDto { PostID = post.ID };
+                return new Response<PostProcessedDto>(new PostProcessedDto { PostID = post.ID });
             }
             catch (Exception)
             {
