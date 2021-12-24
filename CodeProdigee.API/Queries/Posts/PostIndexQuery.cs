@@ -57,8 +57,6 @@ namespace CodeProdigee.API.Queries.Posts
                 Resources = p.Resources.Select(r => new ResourceDto { ResourceUrl = r.ResourceUrl, Type = r.PostResourceType }).ToList(),
                 Comments = p.Comments.Select(c => new CommentDto
                 {
-                    DisLikes = c.DisLikes,
-                    Likes = c.Likes,
                     Title = c.Title,
                     PostID = c.PostID,
                     CommentBody = c.CommentBody,

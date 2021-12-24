@@ -3,6 +3,7 @@ using System;
 using CodeProdigee.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CodeProdigee.API.Migrations
 {
     [DbContext(typeof(CodeProdigeeContext))]
-    partial class CodeProdigeeContextModelSnapshot : ModelSnapshot
+    [Migration("20211224171739_AddCommentsReplyAndReactions")]
+    partial class AddCommentsReplyAndReactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

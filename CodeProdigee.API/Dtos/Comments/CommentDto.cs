@@ -1,14 +1,14 @@
 ﻿using CodeProdigee.API.Dtos.Commentators;
+using CodeProdigee.API.Dtos.CommentReplies;
+using CodeProdigee.API.Dtos.Reactions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Dtos.Comments
 {
     public class CommentDto
     {
-        public List<CommentDto> Replies { get; set; }
+        public List<CommentReplyDto> Replies { get; set; }
 
         public CommentatorDto CommentAuthor { get; set; }
 
@@ -20,8 +20,8 @@ namespace CodeProdigee.API.Dtos.Comments
 
         public string Title { get; set; }
 
-        public List<bool> Likes { get; set; }
+        public List<ReactionDto> Reactions { get; set; }
 
-        public List<bool> DisLikes { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
     }
 }

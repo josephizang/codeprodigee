@@ -41,11 +41,15 @@ namespace CodeProdigee.API.Data
                 .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Tag>()
                 .HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Reaction>()
+                .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Resource>()
                 .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Comment>()
                 .HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Commentator>()
+                .HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<CommentReply>()
                 .HasQueryFilter(p => !p.IsDeleted);
 
             builder.Entity<Post>()

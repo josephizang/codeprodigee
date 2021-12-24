@@ -5,21 +5,21 @@ namespace CodeProdigee.API.Dtos
 {
     public class CollectionResponse<T> : BaseResponse where T : class
     {
-        public IEnumerable<T> Payload { get; set; }
+        public T Payload { get; set; }
 
-        public CollectionResponse(ICollection<T> payload)
+        public CollectionResponse(T payload)
         {
             Payload = payload;
         }
 
-        public CollectionResponse(ICollection<T> payload, string message, bool successValue)
+        public CollectionResponse(T payload, string message, bool successValue)
         {
             Payload = payload;
             Message = message;
             Success = successValue;
         }
 
-        public CollectionResponse(ICollection<string> errors, string message)
+        public CollectionResponse(List<string> errors, string message)
         {
             Errors = errors;
             Message = message;
