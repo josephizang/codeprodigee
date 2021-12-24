@@ -1,10 +1,9 @@
-﻿namespace CodeProdigee.API.Dtos
-{
-    public class Response<T> where T : class
-    {
-        public string Message { get; set; } = string.Empty;
+﻿using CodeProdigee.API.Abstractions;
 
-        public bool Success { get; set; } = false;
+namespace CodeProdigee.API.Dtos
+{
+    public class Response<T> : BaseResponse where T : class
+    {
 
         public T Payload { get; set; } = default;
 
