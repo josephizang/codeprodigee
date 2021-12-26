@@ -2,7 +2,7 @@
 
 namespace CodeProdigee.API.Dtos
 {
-    public class Response<T> : BaseResponse where T : class
+    public class Response<T> : BaseResponse
     {
 
         public T Payload { get; set; } = default;
