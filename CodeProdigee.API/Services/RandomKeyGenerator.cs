@@ -47,7 +47,7 @@ namespace CodeProdigee.API.Services
         public string GarbleStringAsync()
         {
             var payload = RandomString(32);
-            var randomStamp = DateTimeOffset.UtcNow.Ticks.ToString();
+            var randomStamp = DateTime.UtcNow.Ticks.ToString();
             var randomId = _random.NextGuid().ToString();
             byte[] saltBytes = Encoding.UTF8.GetBytes($"{randomId}{payload}{randomStamp}");
             byte[] passBytes = Encoding.UTF8.GetBytes($"{payload}");

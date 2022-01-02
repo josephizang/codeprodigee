@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,7 +25,7 @@ namespace CodeProdigee.API.Controllers
 
         // GET: api/<ResourcesController>
         [HttpGet(Name = "GetAllResources")]
-        [Produces("application/json")]
+        //[Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<ResourceListDto>>> GetAllResources()
         {
@@ -63,7 +62,7 @@ namespace CodeProdigee.API.Controllers
 
         // POST api/<ResourcesController>
         [HttpPost]
-        [Produces("application/json")]
+        //[Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ResourceProcessedDto>> AddAResource([FromBody] ResourceCreateCommand command)
@@ -81,7 +80,7 @@ namespace CodeProdigee.API.Controllers
 
         // PUT api/<ResourcesController>/5
         [HttpPut("{id}")]
-        [Produces("application/json")]
+        //[Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ResourceProcessedDto>> Put(Guid id, [FromBody] ResourceUpdateCommand updateCommand)
@@ -100,7 +99,7 @@ namespace CodeProdigee.API.Controllers
 
         // DELETE api/<ResourcesController>/5
         [HttpDelete("{id}")]
-        [Produces("application/json")]
+        //[Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ResourceProcessedDto>> DeleteResource(ResourceDeleteCommand deleteCommand)

@@ -12,13 +12,13 @@ namespace CodeProdigee.API.Abstractions
             var cryptorand = new CryptoRandom();
             if (ID == Guid.Empty)
                 ID = cryptorand.NextGuid();
-            if (CreatedAt == DateTimeOffset.MinValue)
-                CreatedAt = DateTimeOffset.UtcNow;
+            if (CreatedAt == DateTime.MinValue)
+                CreatedAt = DateTime.UtcNow;
             UpdatedAt = CreatedAt;
         }
         public Guid ID { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public string UpdatedBy { get; set; }
         public string CreatedBy { get; set; }
         public bool IsDeleted { get; set; }
@@ -28,12 +28,12 @@ namespace CodeProdigee.API.Abstractions
     {
         public BaseIdentityUser()
         {
-            if (CreatedAt == DateTimeOffset.MinValue)
-                CreatedAt = DateTimeOffset.UtcNow;
+            if (CreatedAt == DateTime.MinValue)
+                CreatedAt = DateTime.UtcNow;
             UpdatedAt = CreatedAt;
         }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public string UpdatedBy { get; set; }
         public string CreatedBy { get; set; }
         public bool IsDeleted { get; set; }

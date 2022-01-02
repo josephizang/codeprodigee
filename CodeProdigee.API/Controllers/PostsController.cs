@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/posts")]
     [ApiController]
     public class PostsController : ControllerBase
     {

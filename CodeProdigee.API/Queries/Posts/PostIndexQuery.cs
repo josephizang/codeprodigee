@@ -33,7 +33,7 @@ namespace CodeProdigee.API.Queries.Posts
 
         public async Task<List<PostDto>> Handle(PostIndexQuery request, CancellationToken cancellationToken)
         {
-            var targetDate = DateTimeOffset.UtcNow.LocalDateTime;
+            var targetDate = DateTime.UtcNow;
             IQueryable<Post> query = _context.Posts
                  .AsNoTracking()
                  .Include(p => p.Comments)

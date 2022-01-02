@@ -49,7 +49,7 @@ namespace CodeProdigee.API.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -103,7 +103,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -146,7 +146,7 @@ namespace CodeProdigee.API.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -155,7 +155,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -163,7 +163,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Blogs", (string)null);
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Comment", b =>
@@ -183,7 +183,7 @@ namespace CodeProdigee.API.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -200,7 +200,7 @@ namespace CodeProdigee.API.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -214,7 +214,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("PostID");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Commentator", b =>
@@ -223,7 +223,7 @@ namespace CodeProdigee.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -245,7 +245,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -256,7 +256,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Commentators", (string)null);
+                    b.ToTable("Commentators");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.CommentReply", b =>
@@ -271,7 +271,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<Guid?>("CommentatorID")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -284,7 +284,7 @@ namespace CodeProdigee.API.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -296,7 +296,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("CommentatorID");
 
-                    b.ToTable("CommentReply", (string)null);
+                    b.ToTable("CommentReply");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Post", b =>
@@ -311,7 +311,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<Guid?>("BlogID")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -326,7 +326,7 @@ namespace CodeProdigee.API.Migrations
                         .HasMaxLength(3000)
                         .HasColumnType("character varying(3000)");
 
-                    b.Property<DateTimeOffset>("PostDate")
+                    b.Property<DateTime>("PostDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PostTitle")
@@ -334,13 +334,13 @@ namespace CodeProdigee.API.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTimeOffset>("PublishDate")
+                    b.Property<DateTime>("PublishDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("PublishPost")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -358,7 +358,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("PublishDate");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Reaction", b =>
@@ -376,7 +376,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<Guid?>("CommentatorID")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -399,7 +399,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<Guid?>("PostID")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -415,7 +415,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("PostID");
 
-                    b.ToTable("Reaction", (string)null);
+                    b.ToTable("Reaction");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Resource", b =>
@@ -424,7 +424,7 @@ namespace CodeProdigee.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -442,7 +442,7 @@ namespace CodeProdigee.API.Migrations
                     b.Property<string>("ResourceUrl")
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -450,7 +450,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Resources", (string)null);
+                    b.ToTable("Resources");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Tag", b =>
@@ -459,7 +459,7 @@ namespace CodeProdigee.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
@@ -472,7 +472,7 @@ namespace CodeProdigee.API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UpdatedBy")
@@ -480,7 +480,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Tags", (string)null);
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -627,7 +627,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("ResourcesID");
 
-                    b.ToTable("PostResource", (string)null);
+                    b.ToTable("PostResource");
                 });
 
             modelBuilder.Entity("PostTag", b =>
@@ -642,7 +642,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("TagsID");
 
-                    b.ToTable("PostTag", (string)null);
+                    b.ToTable("PostTag");
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Comment", b =>

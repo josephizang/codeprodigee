@@ -11,7 +11,7 @@ namespace CodeProdigee.API.EventNotifications.Resources
 
         public string ResourceUrl { get; set; }
 
-        public DateTimeOffset DateAdded { get; set; }
+        public DateTime DateAdded { get; set; }
 
     }
 }

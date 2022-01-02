@@ -9,9 +9,9 @@ namespace CodeProdigee.API.Abstractions
     {
         Guid ID { get; set; }
 
-        DateTimeOffset CreatedAt { get; set; }
+        DateTime CreatedAt { get; set; }
 
-        DateTimeOffset UpdatedAt { get; set; }
+        DateTime UpdatedAt { get; set; }
 
         string UpdatedBy { get; set; }
 

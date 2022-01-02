@@ -22,6 +22,6 @@ namespace CodeProdigee.API.Dtos.Comments
 
         public List<ReactionDto> Reactions { get; set; }
 
-        public DateTimeOffset CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

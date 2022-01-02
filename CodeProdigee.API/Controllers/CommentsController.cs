@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CodeProdigee.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/comments")]
     [ApiController]
     public class CommentsController : ControllerBase
     {
@@ -19,6 +20,9 @@ namespace CodeProdigee.API.Controllers
         }
         // GET: api/<CommentsController>
         [HttpGet("getAllCommentsOfPost")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] Guid postId)
         {
             var result = await _mediator.Send(postId).ConfigureAwait(false);

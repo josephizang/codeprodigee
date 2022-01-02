@@ -22,7 +22,7 @@ namespace CodeProdigee.API.Command.Post
 
         public string NewTags { get; set; }
 
-        public DateTimeOffset PostDate { get; set; }
+        public DateTime PostDate { get; set; }
 
         public Guid AuthorID { get; set; }
 

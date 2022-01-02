@@ -48,7 +48,7 @@ namespace CodeProdigee.API.Command.Blog
                     target.BlogName = request.BlogName;
                     target.AdminName = request.AdminName;
                     target.BlogAdminEmail = request.BlogAdminEmail;
-                    target.UpdatedAt = DateTimeOffset.UtcNow;
+                    target.UpdatedAt = DateTime.UtcNow;
                     target.ID = request.BlogID;
 
                     _context.Entry(target).State = EntityState.Modified;

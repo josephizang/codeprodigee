@@ -12,11 +12,11 @@ namespace CodeProdigee.API.Models
         }
         public string PostTitle { get; set; }
 
-        public DateTimeOffset PostDate { get; set; }
+        public DateTime PostDate { get; set; }
 
         public string PostBody { get; set; }
 
-        public DateTimeOffset PublishDate { get; set; }
+        public DateTime PublishDate { get; set; }
 
         public bool PublishPost { get; set; }
 

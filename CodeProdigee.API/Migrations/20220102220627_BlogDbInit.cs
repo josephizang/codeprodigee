@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using System;
 
 #nullable disable
 
 namespace CodeProdigee.API.Migrations
 {
-    public partial class SetupInitDb : Migration
+    public partial class BlogDbInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +33,9 @@ namespace CodeProdigee.API.Migrations
                     LastName = table.Column<string>(type: "text", nullable: true),
                     IpAddress = table.Column<string>(type: "text", nullable: true),
                     AvatarImageUrl = table.Column<string>(type: "text", nullable: true),
+                    AuthorTwitter = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    AuthorGithub = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Bio = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -45,35 +47,18 @@ namespace CodeProdigee.API.Migrations
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Authors",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uuid", nullable: false),
-                    AuthorName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    AuthorEmail = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    AuthorTwitter = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    AuthorGithub = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    AvatarImage = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
-                    Bio = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Authors", x => x.ID);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,8 +69,8 @@ namespace CodeProdigee.API.Migrations
                     BlogAdminEmail = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     AdminName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     BlogName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -103,8 +88,9 @@ namespace CodeProdigee.API.Migrations
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     FullName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     ViolationCount = table.Column<int>(type: "integer", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IpAddress = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -122,8 +108,8 @@ namespace CodeProdigee.API.Migrations
                     ResourceUrl = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     PostResourceType = table.Column<int>(type: "integer", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -139,8 +125,8 @@ namespace CodeProdigee.API.Migrations
                 {
                     ID = table.Column<Guid>(type: "uuid", nullable: false),
                     TagName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -262,14 +248,14 @@ namespace CodeProdigee.API.Migrations
                 {
                     ID = table.Column<Guid>(type: "uuid", nullable: false),
                     PostTitle = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    PostDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    PostDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     PostBody = table.Column<string>(type: "character varying(3000)", maxLength: 3000, nullable: false),
-                    PublishDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     PublishPost = table.Column<bool>(type: "boolean", nullable: false),
-                    AuthorID = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuthorID = table.Column<string>(type: "text", nullable: true),
                     BlogID = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     CreatedBy = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -278,11 +264,10 @@ namespace CodeProdigee.API.Migrations
                 {
                     table.PrimaryKey("PK_Posts", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Posts_Authors_AuthorID",
+                        name: "FK_Posts_AspNetUsers_AuthorID",
                         column: x => x.AuthorID,
-                        principalTable: "Authors",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Posts_Blogs_BlogID",
                         column: x => x.BlogID,
@@ -299,12 +284,9 @@ namespace CodeProdigee.API.Migrations
                     CommentAuthorID = table.Column<Guid>(type: "uuid", nullable: false),
                     CommentBody = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     Title = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    Likes = table.Column<List<bool>>(type: "boolean[]", nullable: true),
-                    DisLikes = table.Column<List<bool>>(type: "boolean[]", nullable: true),
-                    AuthorID = table.Column<Guid>(type: "uuid", nullable: true),
-                    CommentID = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -313,21 +295,16 @@ namespace CodeProdigee.API.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Comments_Authors_AuthorID",
-                        column: x => x.AuthorID,
-                        principalTable: "Authors",
-                        principalColumn: "ID");
+                        name: "FK_Comments_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Commentators_CommentAuthorID",
                         column: x => x.CommentAuthorID,
                         principalTable: "Commentators",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comments_Comments_CommentID",
-                        column: x => x.CommentID,
-                        principalTable: "Comments",
-                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Comments_Posts_PostID",
                         column: x => x.PostID,
@@ -384,6 +361,79 @@ namespace CodeProdigee.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CommentReply",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    CommentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReplyBody = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    CommentatorID = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentReply", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_CommentReply_Commentators_CommentatorID",
+                        column: x => x.CommentatorID,
+                        principalTable: "Commentators",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_CommentReply_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reaction",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Like = table.Column<bool>(type: "boolean", nullable: false),
+                    DisLike = table.Column<bool>(type: "boolean", nullable: false),
+                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CommentID = table.Column<Guid>(type: "uuid", nullable: true),
+                    CommentReplyID = table.Column<Guid>(type: "uuid", nullable: true),
+                    CommentatorID = table.Column<Guid>(type: "uuid", nullable: true),
+                    PostID = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reaction", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Reaction_Commentators_CommentatorID",
+                        column: x => x.CommentatorID,
+                        principalTable: "Commentators",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Reaction_CommentReply_CommentReplyID",
+                        column: x => x.CommentReplyID,
+                        principalTable: "CommentReply",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Reaction_Comments_CommentID",
+                        column: x => x.CommentID,
+                        principalTable: "Comments",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Reaction_Posts_PostID",
+                        column: x => x.PostID,
+                        principalTable: "Posts",
+                        principalColumn: "ID");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -422,19 +472,24 @@ namespace CodeProdigee.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AuthorID",
+                name: "IX_CommentReply_CommentatorID",
+                table: "CommentReply",
+                column: "CommentatorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommentReply_CommentId",
+                table: "CommentReply",
+                column: "CommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ApplicationUserId",
                 table: "Comments",
-                column: "AuthorID");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CommentAuthorID",
                 table: "Comments",
                 column: "CommentAuthorID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_CommentID",
-                table: "Comments",
-                column: "CommentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostID",
@@ -471,6 +526,26 @@ namespace CodeProdigee.API.Migrations
                 name: "IX_PostTag_TagsID",
                 table: "PostTag",
                 column: "TagsID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reaction_CommentatorID",
+                table: "Reaction",
+                column: "CommentatorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reaction_CommentID",
+                table: "Reaction",
+                column: "CommentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reaction_CommentReplyID",
+                table: "Reaction",
+                column: "CommentReplyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reaction_PostID",
+                table: "Reaction",
+                column: "PostID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -491,34 +566,37 @@ namespace CodeProdigee.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comments");
-
-            migrationBuilder.DropTable(
                 name: "PostResource");
 
             migrationBuilder.DropTable(
                 name: "PostTag");
 
             migrationBuilder.DropTable(
+                name: "Reaction");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Commentators");
 
             migrationBuilder.DropTable(
                 name: "Resources");
 
             migrationBuilder.DropTable(
-                name: "Posts");
-
-            migrationBuilder.DropTable(
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Authors");
+                name: "CommentReply");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Commentators");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Blogs");

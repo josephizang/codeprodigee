@@ -14,7 +14,7 @@ namespace CodeProdigee.API.EventNotifications.Posts
 
         public string AuthorId { get; set; }
 
-        public DateTimeOffset PublishedAt { get; set; }
+        public DateTime PublishedAt { get; set; }
 
         public string ResourceLink { get; set; }
 

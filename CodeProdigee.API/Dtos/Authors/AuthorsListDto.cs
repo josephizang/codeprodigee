@@ -8,7 +8,7 @@ namespace CodeProdigee.API.Dtos.Authors
 
         public string LastName { get; set; }
 
-        public DateTimeOffset DateJoined { get; set; }
+        public DateTime DateJoined { get; set; }
 
         public string AuthorEmail { get; set; }
 

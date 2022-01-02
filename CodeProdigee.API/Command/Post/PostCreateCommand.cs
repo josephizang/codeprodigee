@@ -75,7 +75,7 @@ namespace CodeProdigee.API.Command.Post
                 }).ToList();
 
                 if (post.PublishPost == true)
-                    post.PublishDate = DateTimeOffset.UtcNow;
+                    post.PublishDate = DateTime.UtcNow;
 
                 _context.Posts.Add(post);
                 await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

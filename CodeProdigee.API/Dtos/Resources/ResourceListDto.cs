@@ -14,7 +14,7 @@ namespace CodeProdigee.API.Dtos.Resources
 
         public Guid ResourceID { get; set; }
 
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         public int NumberOfUses { get; set; }
     }
