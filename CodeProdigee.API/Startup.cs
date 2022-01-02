@@ -1,6 +1,7 @@
 using CodeProdigee.API.Abstractions;
 using CodeProdigee.API.Core;
 using CodeProdigee.API.Data;
+using CodeProdigee.API.Domain_Services;
 using CodeProdigee.API.Models;
 using CodeProdigee.API.Services;
 using MediatR;
@@ -37,6 +38,7 @@ namespace CodeProdigee.API
 
             services.AddMediatR(typeof(Startup));
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IContentFilter, ContentFilter>();
             services.AddIdentityCore<ApplicationUser>()
                 .AddEntityFrameworkStores<CodeProdigeeContext>();
             services.AddHttpContextAccessor();

@@ -36,7 +36,6 @@
   <ItemGroup>
     <Folder Include="Command\Commentator\" />
     <Folder Include="Command\Reaction\" />
-    <Folder Include="Domain Services\" />
   </ItemGroup>
 
 </Project>

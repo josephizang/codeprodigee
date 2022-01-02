@@ -163,7 +163,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Comment", b =>
@@ -214,7 +214,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("PostID");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Commentator", b =>
@@ -256,7 +256,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Commentators");
+                    b.ToTable("Commentators", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.CommentReply", b =>
@@ -296,7 +296,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("CommentatorID");
 
-                    b.ToTable("CommentReply");
+                    b.ToTable("CommentReply", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Post", b =>
@@ -358,7 +358,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("PublishDate");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Reaction", b =>
@@ -415,7 +415,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("PostID");
 
-                    b.ToTable("Reaction");
+                    b.ToTable("Reaction", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Resource", b =>
@@ -450,7 +450,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Resources");
+                    b.ToTable("Resources", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Tag", b =>
@@ -480,7 +480,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -627,7 +627,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("ResourcesID");
 
-                    b.ToTable("PostResource");
+                    b.ToTable("PostResource", (string)null);
                 });
 
             modelBuilder.Entity("PostTag", b =>
@@ -642,7 +642,7 @@ namespace CodeProdigee.API.Migrations
 
                     b.HasIndex("TagsID");
 
-                    b.ToTable("PostTag");
+                    b.ToTable("PostTag", (string)null);
                 });
 
             modelBuilder.Entity("CodeProdigee.API.Models.Comment", b =>
