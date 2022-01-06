@@ -4,7 +4,6 @@ using CodeProdigee.API.Data;
 using CodeProdigee.API.Domain_Services;
 using CodeProdigee.API.Models;
 using CodeProdigee.API.Services;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace CodeProdigee.API
@@ -36,7 +34,7 @@ namespace CodeProdigee.API
                 .EnableSensitiveDataLogging();
             });
 
-            services.AddMediatR(typeof(Startup));
+            //services.AddMediatR(typeof(Startup));
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IContentFilter, ContentFilter>();
             services.AddIdentityCore<ApplicationUser>()
@@ -67,31 +65,31 @@ namespace CodeProdigee.API
                 };
             });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeProdigee.API", Version = "v1", Description = "Backend API for CodeProdigee" });
-                var securityScheme = new OpenApiSecurityScheme
-                {
-                    Description = "JWT Auth Header with bearer scheme",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    Reference = new OpenApiReference
-                    {
-                        Id = "Bearer",
-                        Type = ReferenceType.SecurityScheme
-                    }
-                };
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeProdigee.API", Version = "v1", Description = "Backend API for CodeProdigee" });
+            //    var securityScheme = new OpenApiSecurityScheme
+            //    {
+            //        Description = "JWT Auth Header with bearer scheme",
+            //        Name = "Authorization",
+            //        In = ParameterLocation.Header,
+            //        Type = SecuritySchemeType.ApiKey,
+            //        Scheme = "Bearer",
+            //        Reference = new OpenApiReference
+            //        {
+            //            Id = "Bearer",
+            //            Type = ReferenceType.SecurityScheme
+            //        }
+            //    };
 
-                var security = new OpenApiSecurityRequirement
-                {
-                    { securityScheme, new string[] {} }
-                };
+            //    var security = new OpenApiSecurityRequirement
+            //    {
+            //        { securityScheme, new string[] {} }
+            //    };
 
-                c.AddSecurityDefinition("Bearer", securityScheme);
-                c.AddSecurityRequirement(security);
-            });
+            //    c.AddSecurityDefinition("Bearer", securityScheme);
+            //    c.AddSecurityRequirement(security);
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,12 +98,12 @@ namespace CodeProdigee.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeProdigee.API v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeProdigee.API v1"));
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeProdigee.API v1"));
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeProdigee.API v1"));
 
             app.UseHttpsRedirection();
 
@@ -117,7 +115,8 @@ namespace CodeProdigee.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                //endpoints.MapControllers();
+                endpoints.MapGraphQL();
             });
         }
     }
