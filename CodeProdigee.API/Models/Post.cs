@@ -30,6 +30,6 @@ namespace CodeProdigee.API.Models
 
         public List<Comment> Comments { get; set; } = new();
 
-        public List<Reaction> PostReactions { get; set; }
+        public List<Reaction> PostReactions { get; set; } = new();
     }
 }

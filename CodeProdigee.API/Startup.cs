@@ -1,9 +1,7 @@
-using CodeProdigee.API.Abstractions;
 using CodeProdigee.API.Core;
 using CodeProdigee.API.Data;
-using CodeProdigee.API.Domain_Services;
-using CodeProdigee.API.Models;
-using CodeProdigee.API.Services;
+using CodeProdigee.API.GraphQL.QueryTypes;
+using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,17 +26,23 @@ namespace CodeProdigee.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CodeProdigeeContext>(options =>
+            services.AddPooledDbContextFactory<CodeProdigeeContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
                 .EnableSensitiveDataLogging();
             });
+            services.AddGraphQLServer()
+              .AddQueryType<Query>()
+              .AddProjections()
+              .AddFiltering()
+              .AddSorting()
+              .RegisterDbContext<CodeProdigeeContext>(kind: DbContextKind.Pooled);
 
             //services.AddMediatR(typeof(Startup));
-            services.AddTransient<IAuthenticationService, AuthenticationService>();
-            services.AddTransient<IContentFilter, ContentFilter>();
-            services.AddIdentityCore<ApplicationUser>()
-                .AddEntityFrameworkStores<CodeProdigeeContext>();
+            //services.AddTransient<IAuthenticationService, AuthenticationService>();
+            //services.AddTransient<IContentFilter, ContentFilter>();
+            //services.AddIdentityCore<ApplicationUser>()
+            //    .AddEntityFrameworkStores<CodeProdigeeContext>();
             services.AddHttpContextAccessor();
             services.AddControllers();
 

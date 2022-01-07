@@ -1,17 +1,11 @@
 ﻿using CodeProdigee.API.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeProdigee.API.Data
 {
-    public class CodeProdigeeContext : IdentityDbContext<ApplicationUser>
+    public class CodeProdigeeContext : DbContext
     {
         public CodeProdigeeContext(DbContextOptions<CodeProdigeeContext> options) : base(options)
-        {
-
-        }
-
-        public CodeProdigeeContext()
         {
 
         }
@@ -27,6 +21,9 @@ namespace CodeProdigee.API.Data
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Commentator> Commentators { get; set; }
+
+        public DbSet<Reaction> Reactions { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

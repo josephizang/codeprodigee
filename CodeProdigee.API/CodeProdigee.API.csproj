@@ -8,6 +8,9 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="CryptoRandom" Version="1.0.7" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="12.4.1" />
+    <PackageReference Include="HotChocolate.Data" Version="12.4.1" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.4.1" />
+    <PackageReference Include="HotChocolate.Execution" Version="12.4.1" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
@@ -37,6 +40,7 @@
   <ItemGroup>
     <Folder Include="Command\Commentator\" />
     <Folder Include="Command\Reaction\" />
+    <Folder Include="GraphQL\MutationTypes\" />
   </ItemGroup>
 
 </Project>
