@@ -1,5 +1,6 @@
 using CodeProdigee.API.Core;
 using CodeProdigee.API.Data;
+using CodeProdigee.API.GraphQL.MutationTypes;
 using CodeProdigee.API.GraphQL.QueryTypes;
 using HotChocolate.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,6 +34,7 @@ namespace CodeProdigee.API
             });
             services.AddGraphQLServer()
               .AddQueryType<Query>()
+              .AddMutationType<Mutation>()
               .AddProjections()
               .AddFiltering()
               .AddSorting()

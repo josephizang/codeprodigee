@@ -16,5 +16,7 @@ namespace CodeProdigee.API.GraphQL.QueryTypes
         [UseFiltering]
         [UseSorting]
         public IQueryable<Comment> GetComments(CodeProdigeeContext context) => context.Comments;
+
+
     }
 }
